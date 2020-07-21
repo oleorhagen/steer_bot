@@ -154,4 +154,69 @@
     <material>Gazebo/Green</material>
   </gazebo>
 
+  <!-- Lidar -->
+  <xacro:property name="lidar_radius" value="0.05" />
+  <xacro:property name="lidar_height" value="0.1" />
+  <!-- Make the lidar rise above the other rings -->
+  <xacro:property name="lidar_zpos" value="${base_height*2}" />
+
+  <link name="lidar_cylinder">
+    <visual>
+      <material name="green" />
+      <geometry>
+        <cylinder length="${lidar_height}" radius="${lidar_radius}" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="${lidar_height}" radius="${lidar_radius}" />
+      </geometry>
+    </collision>
+    <xacro:solid_cylinder_inertial
+        rpy="0 0 0" xyz="0 0 ${lidar_zpos}"
+        mass="${lidar_radius}"
+        radius="${lidar_radius}" length="${lidar_height}" />
+  </link>
+
+  <joint name="joint_lidar_cylinder" type="fixed">
+    <origin xyz="0 0 ${lidar_zpos}" />
+    <parent link="base_link" />
+    <child link="lidar_cylinder" />
+  </joint>
+
+
+  <!-- Camera -->
+  <xacro:property name="camera_xsize" value="0.05" />
+  <xacro:property name="camera_ysize" value="0.05" />
+  <xacro:property name="camera_zsize" value="0.05" />
+  <xacro:property name="camera_mass"  value="0.1" />
+  <xacro:property name="camera_xpos"  value="${base_length/2}" />
+  <xacro:property name="camera_ypos"  value="0.00" />
+  <xacro:property name="camera_zpos"  value="${base_height/2}" />
+
+  <!-- Camera -->
+  <link name="camera_box" >
+    <visual>
+      <material name="blue" />
+      <geometry>
+        <box size="${camera_xsize} ${camera_ysize} ${camera_zsize}" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${camera_xsize} ${camera_ysize} ${camera_zsize}" />
+      </geometry>
+    </collision>
+    <xacro:solid_cuboid_inertial
+        rpy="0 0 0" xyz="${camera_xsize} ${camera_ysize} ${camera_zsize}"
+        mass="${camera_mass}"
+        x="${camera_xpos}" y="${camera_ypos}" z="${camera_zpos}" />
+  </link>
+
+  <joint name="joint_camera_box" type="fixed">
+    <origin xyz="${camera_xpos} ${camera_ypos} ${camera_zpos}" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="camera_box" />
+  </joint>
+
 </robot>
