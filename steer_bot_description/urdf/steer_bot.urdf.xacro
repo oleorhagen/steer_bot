@@ -28,7 +28,7 @@ wheel_separation_w = base_width  + 2 * axle_offset = 0.4
          implementation of the hardware_interface::RobotHW -->
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       <robotNamespace>${robot_namespace}</robotNamespace>
-      <robotSimType>steer_bot_hardware_gazebo/SteerBotHardwareGazebo</robotSimType>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
       <legacyModeNS>false</legacyModeNS>
     </plugin>
   </gazebo>
@@ -57,7 +57,9 @@ wheel_separation_w = base_width  + 2 * axle_offset = 0.4
   <xacro:property name="steer_offset" value="0.02" />
 
   <!-- Base link -->
-  <link name="base_link">
+  <link name="base_link"/>
+
+  <link name="chassis">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -76,6 +78,11 @@ wheel_separation_w = base_width  + 2 * axle_offset = 0.4
         mass="${base_mass}"
         x="${base_length}" y="${base_width}" z="${base_height}" />
   </link>
+
+  <joint name="joint_chassis_to_base_link" type="fixed" >
+    <parent link="base_link" />
+    <child link="chassis" />
+  </joint>
 
   <!-- Front steer and rear wheel joints required for ackermann_steering_controller -->
   <xacro:front_steer
@@ -150,7 +157,7 @@ wheel_separation_w = base_width  + 2 * axle_offset = 0.4
   </xacro:rear_wheel_lr>
 
   <!-- Colour -->
-  <gazebo reference="base_link">
+  <gazebo reference="chassis">
     <material>Gazebo/Green</material>
   </gazebo>
 
@@ -191,7 +198,7 @@ wheel_separation_w = base_width  + 2 * axle_offset = 0.4
   <gazebo reference="lidar_cylinder">
     <sensor type="ray" name="lds_lfcd_sensor">
       <pose>0 0 0.0 0 0 0</pose>
-      <visualize>true</visualize>
+      <visualize>false</visualize>
       <update_rate>5</update_rate>
       <ray>
         <scan>
@@ -257,7 +264,7 @@ wheel_separation_w = base_width  + 2 * axle_offset = 0.4
 
   <joint name="joint_camera_box" type="fixed">
     <origin xyz="${camera_xpos} ${camera_ypos} ${camera_zpos}" rpy="0 0 0" />
-    <parent link="base_link" />
+    <parent link="chassis" />
     <child link="camera_box" />
   </joint>
 

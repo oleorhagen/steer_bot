@@ -1,14 +1,24 @@
 # Configuration for the ackermann_steering_controller.
 ackermann_steering_controller:
-    type: 'ackermann_steering_controller/AckermannSteeringController'
+    type: ackermann_steering_controller/AckermannSteeringController
 
     # Odometry related 
     publish_rate: 50                    # default: 1.0
     open_loop: false
 
     # Joints
-    rear_wheel: 'rear_wheel_joint'
-    front_steer: 'front_steer_joint'
+
+    # Steering
+    front_steer:       front_steer_joint
+    left_front_steer:  front_left_steer_joint
+    right_front_steer: front_right_steer_joint
+
+    # Propulsion
+    left_rear_wheel:   rear_left_wheel_joint
+    right_rear_wheel:  rear_right_wheel_joint
+
+    left_front_wheel:   front_left_wheel_joint
+    right_front_wheel:  front_right_wheel_joint
 
     # Geometry
     wheel_separation_h: 0.40
@@ -57,3 +67,4 @@ ackermann_steering_controller:
 
     # Deprecated...
     # publish_wheel_joint_controller_state: false
+
