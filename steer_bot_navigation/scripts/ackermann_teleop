@@ -1,0 +1,74 @@
+#! /usr/bin/python
+
+# A simple Ackermann steering controller for the RC bot teloperation
+
+# TODO - What is the max steering of the motors?
+# and how to handle it?
+
+from math import pi
+
+import rospy
+
+from geometry_msgs.msg import Twist
+
+
+def rospy_is_running():
+    return not rospy.is_shutdown()
+
+
+class AckermannController(object):
+    def __init__(self):
+        rospy.loginfo("Initializing the 'ackermann_controller'")
+        rospy.init_node("ackermann_controller")
+        rospy.on_shutdown(self.shutdown)
+        self.max_omega = pi / 2
+        self.max_velocity = 1  # m/s
+
+        # Subscribe to ~/ackermann_steering_controller/cmd_vel
+        self.cmd_vel_publisher = rospy.Publisher(
+            "/steer_bot/ackermann_steering_controller/cmd_vel",
+            Twist,
+            queue_size=1,
+        )
+        rospy.Subscriber(
+            "/teleop/cmd_vel", Twist, self.cmd_vel_callback
+        )  # Get the speed and steering angle from the teleop node
+
+        self.velocity = 0
+        self.omega = 0
+
+        self.rate = rospy.Rate(50)  # Hardcoded for now
+
+    def spin(self):
+        """Run the control loop"""
+
+        last_time = rospy.get_time()
+
+        while rospy_is_running():
+            # For now, simply run the vehicle forwards
+            data = Twist(data=self.velocity)
+            self.cmd_vel_publisher.publish(data)
+            self.rate.sleep()
+
+    def cmd_vel_callback(self, twist):
+        """Handle the 'cmd_vel' subscription"""
+        # rospy.loginfo("Received message: {}".format(twist))
+        rospy.loginfo("v: {}, o: {}".format(self.velocity, self.omega))
+        v = twist.linear
+        o = twist.angular
+        self.velocity += v.x
+        self.omega += o.z
+
+    def shutdown(self):
+        self.velocity = 0
+        self.omega = 0
+        t = Twist()
+        t.linear = 0
+        t.angular = 0
+        self.cmd_vel_publisher.publish(t) # TODO -- Is this a zero twist?
+        rospy.sleep(1)
+
+
+if __name__ == "__main__":
+    ctrl = AckermannController()
+    ctrl.spin()

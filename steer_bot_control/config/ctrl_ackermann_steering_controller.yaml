@@ -6,6 +6,11 @@ ackermann_steering_controller:
     publish_rate: 50                    # default: 1.0
     open_loop: false
 
+    # Vehicle parameters (width and length)
+    wheel_separation_h: 0.4;
+    wheel_separation_l: 0.31;
+
+
     # Joints
 
     # Steering

@@ -12,6 +12,10 @@
     <!-- <arg name="namespace" default="$(arg namespace)" /> -->
   </include>
 
+  <!-- <include file="$(find steer_bot_navigation)/launch/move_base.launch" > -->
+    <!-- <arg name="namespace" default="$(arg namespace)" /> -->
+  <!-- </include> -->
+
   <!-- This is needed, since the Lidar gives the frame name the 'steer_bot/lidar_cylinder' -->
   <node name="base_link_to_lidar_cylinder_tf" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 base_link steer_bot/lidar_cylinder 100" />
 
