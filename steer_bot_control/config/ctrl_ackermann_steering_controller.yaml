@@ -8,7 +8,7 @@ ackermann_steering_controller:
 
     # Vehicle parameters (width and length)
     wheel_separation_h: 0.4;
-    wheel_separation_l: 0.31;
+    wheel_separation_l: 0.4;
 
 
     # Joints
