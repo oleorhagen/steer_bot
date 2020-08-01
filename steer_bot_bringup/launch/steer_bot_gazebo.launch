@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find steer_bot_gazebo)/launch/steer_bot_sim.launch" />
+
+  <include file="$(find steer_bot_viz)/launch/view_steer_bot_robot.launch" />
+
+</launch>
