@@ -1,8 +1,21 @@
 <?xml version="1.0"?>
 <launch>
 
-  <include file="$(find steer_bot_gazebo)/launch/steer_bot_sim.launch" />
+  <arg name="rqt" default="true" />
+  <arg name="namespace" default="/steer_bot" />
+  <node pkg="rqt_robot_steering" type="rqt_robot_steering" name="rqt_robot_steering" if="$(arg rqt)" >
+    <param name="default_topic" value="$(arg namespace)/ackermann_steering_controller/cmd_vel"/>
+  </node>
+ 
 
-  <include file="$(find steer_bot_viz)/launch/view_steer_bot_robot.launch" />
+  <include file="$(find steer_bot_gazebo)/launch/steer_bot_sim.launch" >
+    <!-- Not working :/ -->
+    <param name="rqt" value="true" />
+  </include>
+
+  <include file="$(find steer_bot_viz)/launch/view_steer_bot_robot.launch" >
+  </include>
+
+  <include file="$(find steer_bot_navigation)/launch/steer_bot_localization.launch" />
 
 </launch>
