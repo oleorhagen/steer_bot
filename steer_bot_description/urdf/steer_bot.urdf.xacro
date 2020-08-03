@@ -363,53 +363,67 @@ wheel_separation_w = base_width  + 2 * axle_offset = 0.4
 
   <!-- GPS Sensor -->
 
-  <!-- Gps -->
-  <xacro:property name="gps_xsize" value="0.05" />
-  <xacro:property name="gps_ysize" value="0.05" />
-  <xacro:property name="gps_zsize" value="0.05" />
-  <xacro:property name="gps_mass"  value="0.1" />
-  <xacro:property name="gps_xpos"  value="0" />
-  <xacro:property name="gps_ypos"  value="0.00" />
-  <xacro:property name="gps_zpos"  value="${base_height/2}" />
+<!--...................................GPS MODULE...................................................-->
+<link name="base_gps_front">
 
-  <!-- GPS -->
-  <link name="gps_box" >
-    <visual>
-      <material name="blue" />
+        <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+
+    <collision name='collision'>
+
       <geometry>
-        <box size="${gps_xsize} ${gps_ysize} ${gps_zsize}" />
+        <box size="0.01 0.01 0.01"/>
       </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="${gps_xsize} ${gps_ysize} ${gps_zsize}" />
-      </geometry>
+	<origin xyz="0 0 0" rpy="0 0 0"/>
+   	<material name="green"/>
     </collision>
-    <xacro:solid_cuboid_inertial
-        rpy="0 0 0" xyz="${gps_xsize} ${gps_ysize} ${gps_zsize}"
-        mass="${gps_mass}"
-        x="${gps_xpos}" y="${gps_ypos}" z="${gps_zpos}" />
-  </link>
 
-  <joint name="joint_gps_box" type="fixed">
-    <origin xyz="${gps_xpos} ${gps_ypos} ${gps_zpos}" rpy="0 0 0" />
-    <parent link="chassis" />
-    <child link="gps_box" />
-  </joint>
+    <visual>
 
-  <gazebo reference="gps_box" >
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+	<origin xyz="0 0 0" rpy="0 0 0"/>
+	<material name="green"/>
+
+    </visual>
+</link>
+
+<gazebo reference="base_gps_front">
+    <material>Gazebo/Green</material>
+    <turnGravityOff>false</turnGravityOff>
+</gazebo>
+
+<joint name="gps_front_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin rpy="0 0 0" xyz="-0.395 -0.295 0.155" />
+    <parent link="base_link"/>
+    <child link="base_gps_front"/>
+</joint>
+
+<!--..................................GPS SENSOR PLUGIN.......................................-->
+
+    <!-- GPS Sensor -->
+  <gazebo>
     <plugin name="novatel_gps_sim" filename="libhector_gazebo_ros_gps.so">
       <alwaysOn>1</alwaysOn>
-      <updateRate>10.0</updateRate>
-      <bodyName>gps_box</bodyName>
+      <updateRate>50</updateRate>
+      <bodyName>base_gps_front</bodyName>
       <topicName>fix</topicName>
-      <velocityTopicName>fix_velocity</velocityTopicName>
+      <velocityTopicName>/vel</velocityTopicName>
       <drift>5.0 5.0 5.0</drift>
-      <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
+      <gaussianNoise>0 0 0</gaussianNoise>
       <velocityDrift>0 0 0</velocityDrift>
-      <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
+      <velocityGaussianNoise>0 0 0</velocityGaussianNoise>
+     <!--<referenceLatitude>38.419354</referenceLatitude>-->
+     <!--<referenceLongitude>-110.781900</referenceLongitude-->  <!--for blacklister-->
+     <!--<referenceLatitude>38.419853</referenceLatitude>
+     <referenceLongitude>-110.781529</referenceLongitude>   for blacklister 1,2-->
+     <referenceLatitude>13.347590</referenceLatitude>
+     <referenceLongitude>74.79208833</referenceLongitude>   <!--for workshop-->
     </plugin>
   </gazebo>
-
-
 </robot>
