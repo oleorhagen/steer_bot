@@ -415,15 +415,15 @@ wheel_separation_w = base_width  + 2 * axle_offset = 0.4
       <topicName>fix</topicName>
       <velocityTopicName>/vel</velocityTopicName>
       <drift>5.0 5.0 5.0</drift>
-      <gaussianNoise>0 0 0</gaussianNoise>
+      <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
       <velocityDrift>0 0 0</velocityDrift>
-      <velocityGaussianNoise>0 0 0</velocityGaussianNoise>
+      <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
      <!--<referenceLatitude>38.419354</referenceLatitude>-->
      <!--<referenceLongitude>-110.781900</referenceLongitude-->  <!--for blacklister-->
      <!--<referenceLatitude>38.419853</referenceLatitude>
      <referenceLongitude>-110.781529</referenceLongitude>   for blacklister 1,2-->
-     <referenceLatitude>13.347590</referenceLatitude>
-     <referenceLongitude>74.79208833</referenceLongitude>   <!--for workshop-->
+     <!-- <referenceLatitude>13.347590</referenceLatitude> -->
+     <!-- <referenceLongitude>74.79208833</referenceLongitude>   <!-\-for workshop-\-> -->
     </plugin>
   </gazebo>
 </robot>
