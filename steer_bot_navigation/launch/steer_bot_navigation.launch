@@ -4,15 +4,15 @@
   <arg name="namespace" default="/steer_bot" />
 
   <!-- Mapping -->
-  <!-- <include file="$(find steer_bot_navigation)/launch/gmapping.launch"> -->
+  <include file="$(find steer_bot_navigation)/launch/gmapping.launch">
   <!--   <!-\- <arg name="namespace" default="$(arg namespace)" /> -\-> -->
-  <!-- </include> -->
-
-  <node name="hector_mapping" pkg="hector_mapping" type="hector_mapping" ns="$(arg namespace)" />
-
-  <include file="$(find steer_bot_navigation)/launch/amcl.launch" >
-    <!-- <arg name="namespace" default="$(arg namespace)" /> -->
   </include>
+
+  <!-- <node name="hector_mapping" pkg="hector_mapping" type="hector_mapping" ns="$(arg namespace)" /> -->
+
+  <!-- <include file="$(find steer_bot_navigation)/launch/amcl.launch" > -->
+    <!-- <arg name="namespace" default="$(arg namespace)" /> -->
+  <!-- </include> -->
 
   <!-- <include file="$(find steer_bot_navigation)/launch/move_base.launch" > -->
     <!-- <arg name="namespace" default="$(arg namespace)" /> -->
