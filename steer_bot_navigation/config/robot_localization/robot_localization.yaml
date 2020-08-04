@@ -14,28 +14,32 @@ diagnostics_agg: true
 #ax    , ay    , az
 
 odom0: /steer_bot/ackermann_steering_controller/odom
+odom0_queue_size: 10
 
 odom0_config: [
                false, false, false,
                false, false, false,
-               true, true, false,
-               false, false, true,
+               true, true, true,
+               false, false, false,
                false, false, false
                ]
 
-odom0_differential: true
+odom0_differential: false
 odom0_relative: false
 
 imu0: /steer_bot/imu
+imu0_queue_size: 10
 
 # NOTE: If you find that your robot has x drift,
 # the most likely candidate is the x'' (acceleration) fr$
 # Just set it to false! (It's the first entry on the las$
 imu0_config: [false, false, false,
-              false, false, true,
-              false, false, false,
               true, true, true,
-              false, false, false]
+              false, false, false,
+              true, true, false,
+              true, true, true]
 
-imu0_differential: true
-imu0_relative: true
+imu0_differential: false
+imu0_relative: false
+
+imu0_remove_gravitational_acceleration: false
