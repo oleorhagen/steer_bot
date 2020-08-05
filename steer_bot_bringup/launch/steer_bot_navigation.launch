@@ -16,6 +16,4 @@
   <include file="$(find steer_bot_navigation)/launch/steer_bot_localization.launch" />
   <include file="$(find steer_bot_navigation)/launch/steer_bot_navigation.launch" />
 
-  <node name="rosbag_player" pkg="rosbag" type="play" args="--clock $(find steer_bot_navigation)/bags/2020-08-04-22-44-12.bag" />
-
 </launch>
