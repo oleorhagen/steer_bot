@@ -3,11 +3,17 @@
 
   <arg name="namespace" default="/steer_bot" />
 
+  <arg name="gmapping" default="false" />
+  <arg name="slam_toolbox" default="true" />
+
   <!-- Mapping -->
-  <include file="$(find steer_bot_navigation)/launch/gmapping.launch">
+  <include file="$(find steer_bot_navigation)/launch/gmapping.launch" if="$(arg gmapping)">
   <!--   <!-\- <arg name="namespace" default="$(arg namespace)" /> -\-> -->
   </include>
 
+  <node pkg="slam_toolbox" type="sync_slam_toolbox_node" name="slam_toolbox" output="screen" ns="$(arg namespace)" >
+    <rosparam command="load" file="$(find steer_bot_navigation)/config/slam_toolbox/mapper_online_sync.yaml" />
+  </node>
   <!-- <node name="hector_mapping" pkg="hector_mapping" type="hector_mapping" ns="$(arg namespace)" /> -->
 
   <!-- <include file="$(find steer_bot_navigation)/launch/amcl.launch" > -->
