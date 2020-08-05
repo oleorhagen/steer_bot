@@ -14,8 +14,10 @@
   </include>
 
   <include file="$(find steer_bot_viz)/launch/view_steer_bot_robot.launch" >
+    <arg name="rvizconfig" value="$(find steer_bot_viz)/rviz/steer_bot_navigation.rviz" />
   </include>
 
   <include file="$(find steer_bot_navigation)/launch/steer_bot_localization.launch" />
+  <include file="$(find steer_bot_navigation)/launch/steer_bot_navigation.launch" />
 
 </launch>
