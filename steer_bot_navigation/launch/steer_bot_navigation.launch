@@ -8,7 +8,21 @@
 
   <arg name="map_file" default="mymap.yaml" />
 
+  <arg name="localize" default="true" />
+
   <node name="map_server" pkg="map_server" type="map_server" args="$(find steer_bot_navigation)/maps/$(arg map_file)" />
+
+  <!-- Localize -->
+  <!-- <node if="$(arg localize)" pkg="slam_toolbox" type="localization_slam_toolbox_node" name="slam_toolbox" output="screen"> -->
+  <!--   <rosparam command="load" file="$(find steer_bot_navigation)/config/slam_toolbox/mapper_localization_mode.yaml" /> -->
+  <!-- </node> -->
+  <include file="$(find steer_bot_navigation)/launch/amcl.launch" >
+    <arg name="namespace" default="$(arg namespace)" />
+    <arg name="map_topic"     default="/map"/>
+    <!-- <arg name="initial_pose_x" default="-15.858020"/>  -->
+    <!-- <arg name="initial_pose_y" default="-16.244750"/> -->
+    <arg name="initial_pose_a" default="0.0"/>
+  </include>
 
 
   <!-- Mapping -->
@@ -20,10 +34,6 @@
     <rosparam command="load" file="$(find steer_bot_navigation)/config/slam_toolbox/mapper_online_sync.yaml" />
   </node>
   <!-- <node name="hector_mapping" pkg="hector_mapping" type="hector_mapping" ns="$(arg namespace)" /> -->
-
-  <!-- <include file="$(find steer_bot_navigation)/launch/amcl.launch" > -->
-    <!-- <arg name="namespace" default="$(arg namespace)" /> -->
-  <!-- </include> -->
 
   <!-- <include file="$(find steer_bot_navigation)/launch/move_base.launch" > -->
     <!-- <arg name="namespace" default="$(arg namespace)" /> -->
