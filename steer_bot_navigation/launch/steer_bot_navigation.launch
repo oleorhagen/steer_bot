@@ -35,8 +35,8 @@
   </node>
   <!-- <node name="hector_mapping" pkg="hector_mapping" type="hector_mapping" ns="$(arg namespace)" /> -->
 
-  <!-- <include file="$(find steer_bot_navigation)/launch/move_base.launch" > -->
+  <include file="$(find steer_bot_navigation)/launch/move_base.launch" >
     <!-- <arg name="namespace" default="$(arg namespace)" /> -->
-  <!-- </include> -->
+  </include>
 
 </launch>

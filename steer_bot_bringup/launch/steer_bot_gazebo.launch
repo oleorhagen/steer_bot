@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="rqt" default="true" />
+  <arg name="rqt" default="false" />
   <arg name="namespace" default="/steer_bot" />
-  <node pkg="rqt_robot_steering" type="rqt_robot_steering" name="rqt_robot_steering" if="$(arg rqt)" >
+  <node if="$(arg rqt)" pkg="rqt_robot_steering" type="rqt_robot_steering" name="rqt_robot_steering" >
     <param name="default_topic" value="$(arg namespace)/ackermann_steering_controller/cmd_vel"/>
   </node>
  
