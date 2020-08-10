@@ -2,6 +2,7 @@
   <!-- Arguments -->
   <arg name="cmd_vel_topic" default="/steer_bot/ackermann_steering_controller/cmd_vel" />
   <arg name="odom_topic" default="/steer_bot/ackermann_steering_controller/odom" />
+  <arg name="scan_topic" default="/steer_bot/scan" />
   <arg name="move_forward_only" default="false"/>
 
   <!-- move_base -->
@@ -25,5 +26,6 @@
     <rosparam file="$(find steer_bot_navigation)/config/teb_local_planner/teb_local_planner.yaml" command="load" />
     <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
     <remap from="odom" to="$(arg odom_topic)"/>
+    <remap from="scan" to="$(arg scan_topic)"/>
   </node>
 </launch>
